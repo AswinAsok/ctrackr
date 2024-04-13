@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .authHeader {
@@ -27,7 +27,6 @@
 .authInput {
     width: 84%;
     padding: 0.75rem 1.75rem;
-    padding-left: 0.75rem;
     margin-bottom: 1rem;
     border: none;
     border-radius: 5px;
@@ -37,11 +36,36 @@
 .authButton {
     width: 100%;
     padding: 0.75rem 1.75rem;
-    margin-top: 1rem;
+
     border: none;
     border-radius: 5px;
     background-color: var(--primary-color);
     color: white;
     font-weight: 700;
     cursor: pointer;
+}
+
+.orDivider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--text-color);
+    margin: 1rem 0;
+}
+
+.orDivider hr {
+    flex: 1;
+    border: none;
+    height: 1px;
+    width: 9rem;
+    
+    color: #000;
+    background-color: #333232;
+
+}
+
+.orDivider span {
+    padding: 0 1rem;
+    color: var(--text-color);
+    font-weight: 700;
 }

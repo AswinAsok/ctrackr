@@ -16,6 +16,25 @@ export const login = async (
                 toast.error(response.error.message);
             } else {
                 toast.success("Logged in successfully!");
+                
+                const accessToken = response.data.session.access_token;
+                const refreshToken = response.data.session.refresh_token;
+                const id = response.data.user.id;
+                const email = response.data.user.email;
+                const phone =
+                    response.data.user.phone || "No phone number provided";
+
+                // Create a single object to store
+                const userObject = {
+                    accessToken,
+                    refreshToken,
+                    id,
+                    email,
+                    phone,
+                };
+
+                // Convert the object to a string and store it in local storage
+                localStorage.setItem("userObject", JSON.stringify(userObject));
             }
         })
         .catch((error: any) => {
