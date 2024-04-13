@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
-import toast from "react-hot-toast";
 import { signup } from "./services";
 
 const Signup = () => {
