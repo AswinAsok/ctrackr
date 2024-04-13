@@ -2,6 +2,7 @@ import { useContext } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import toast from "react-hot-toast";
+import { signup } from "./services";
 
 const Signup = () => {
     const { supabase } = useContext(AppContext);
@@ -12,18 +13,7 @@ const Signup = () => {
         const password = (e.target as HTMLFormElement).password.value;
 
         if (supabase) {
-            await supabase.auth
-                .signUp({ email, password })
-                .then((response) => {
-                    if (response.error) {
-                        toast.error(response.error.message);
-                    } else {
-                        toast.success("Signed up successfully!");
-                    }
-                })
-                .catch((error) => {
-                    toast.error(error.error.message || error.message);
-                });
+            signup(email, password, supabase);
         }
     };
 

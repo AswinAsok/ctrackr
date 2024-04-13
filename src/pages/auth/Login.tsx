@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
-import toast from "react-hot-toast";
+import { login } from "./services";
 
 const Login = () => {
     const { supabase } = useContext(AppContext);
@@ -10,21 +10,7 @@ const Login = () => {
         const username = (e.target as HTMLFormElement).username.value;
         const password = (e.target as HTMLFormElement).password.value;
         if (supabase) {
-            supabase.auth
-                .signInWithPassword({
-                    email: username,
-                    password: password,
-                })
-                .then((response) => {
-                    if (response.error) {
-                        toast.error(response.error.message);
-                    } else {
-                        toast.success("Logged in successfully!");
-                    }
-                })
-                .catch((error) => {
-                    toast.error(error.error_description || error.message);
-                });
+            login(username, password, supabase);
         }
     };
 
