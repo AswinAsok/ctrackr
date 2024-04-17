@@ -29,19 +29,34 @@ const Rooms = () => {
         }
     };
 
-    const joinRoom = async () => {
+    const addUserToRoom = async () => {
         if (!supabase) return;
-
-        const { data, error } = await supabase
+        const { data: rooms, error: roomError } = await supabase
             .from("rooms")
-            .select("*")
+            .select("id")
             .eq("room_code", roomCode)
             .single();
 
-        if (error) {
-            console.error("Error joining room:", error);
+        console.log(rooms);
+
+        if (roomError) {
+            console.error("Error retrieving room:", roomError);
+            return;
+        }
+
+        const roomId = rooms.id;
+
+        const { data: membership, error: membershipError } = await supabase
+            .from("room_members")
+            .insert({
+                room_id: roomId,
+                user_id: JSON.parse(localStorage.getItem("userObject")!).id,
+            });
+
+        if (membershipError) {
+            console.error("Error adding user to room:", membershipError);
         } else {
-            console.log("Joined room:", data);
+            console.log("User added to room:", membership);
             // Redirect or perform any other necessary actions
         }
     };
@@ -71,7 +86,10 @@ const Rooms = () => {
                         placeholder="Enter room code"
                         className={styles.authInput}
                     />
-                    <button className={styles.authButton} onClick={joinRoom}>
+                    <button
+                        className={styles.authButton}
+                        onClick={addUserToRoom}
+                    >
                         Join Room
                     </button>
                 </div>
