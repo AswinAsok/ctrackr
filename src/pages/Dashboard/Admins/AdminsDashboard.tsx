@@ -1,4 +1,5 @@
 import styles from "./AdminsDashboard.module.css";
+import MapComponent from "./MapComponent";
 
 const AdminsDashboard = () => {
   return (
@@ -42,6 +43,11 @@ const AdminsDashboard = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+        <div className={styles.mapContainer}>
+          <div className={styles.map}>
+            <MapComponent />
           </div>
         </div>
       </div>

@@ -9,7 +9,10 @@
 }
 
 .dashboard {
-  max-width: 25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
 .nearbyStudentContainer {
@@ -17,6 +20,7 @@
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 1rem;
+  max-width: 20rem;
 }
 
 .nearbyHeading {
@@ -106,4 +110,16 @@
 .studentLocationValue {
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.mapContainer {
+  margin: 0 1rem;
+  max-height: 100vh;
+  height: 100%;
+  max-width: 80vw;
+  width: 100%;
+  border-radius: 10px;
+
+  background-color: #fff;
+  border-radius: 10px;
 }
