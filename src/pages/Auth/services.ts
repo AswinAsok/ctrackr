@@ -1,11 +1,15 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
+import { NavigateFunction } from "react-router-dom";
 
 export const login = async (
     username: string,
     password: string,
-    supabase: SupabaseClient<any, "public", any>
+    supabase: SupabaseClient<any, "public", any>,
+    navigate: NavigateFunction,
+    setLoading: (loading: boolean) => void
 ) => {
+    setLoading(true);
     await supabase.auth
         .signInWithPassword({
             email: username,
@@ -16,7 +20,7 @@ export const login = async (
                 toast.error(response.error.message);
             } else {
                 toast.success("Logged in successfully!");
-                
+
                 const accessToken = response.data.session.access_token;
                 const refreshToken = response.data.session.refresh_token;
                 const id = response.data.user.id;
@@ -35,10 +39,14 @@ export const login = async (
 
                 // Convert the object to a string and store it in local storage
                 localStorage.setItem("userObject", JSON.stringify(userObject));
+                navigate("/rooms");
             }
         })
         .catch((error: any) => {
             toast.error(error.error_description || error.message);
+        })
+        .finally(() => {
+            setLoading(false);
         });
 };
 

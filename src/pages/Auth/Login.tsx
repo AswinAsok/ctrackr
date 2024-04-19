@@ -1,16 +1,22 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { login } from "./services";
 
+import { useNavigate } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
+
 const Login = () => {
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
     const { supabase } = useContext(AppContext);
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const username = (e.target as HTMLFormElement).username.value;
         const password = (e.target as HTMLFormElement).password.value;
         if (supabase) {
-            login(username, password, supabase);
+            login(username, password, supabase, navigate, setLoading);
         }
     };
 
@@ -35,6 +41,7 @@ const Login = () => {
                     />
                     <button type="submit" className={styles.authButton}>
                         Log In
+                        <PulseLoader loading={loading} color="#ffffff" size={10}/>
                     </button>
                 </form>
             </div>

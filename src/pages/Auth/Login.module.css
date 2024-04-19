@@ -25,7 +25,6 @@
 }
 
 .authInput {
-    width: 84%;
     padding: 0.75rem 1.75rem;
     margin-bottom: 1rem;
     border: none;
@@ -34,7 +33,6 @@
 }
 
 .authButton {
-    width: 100%;
     padding: 0.75rem 1.75rem;
 
     border: none;
@@ -43,6 +41,12 @@
     color: white;
     font-weight: 700;
     cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+
+    margin-bottom: 1rem;
 }
 
 .orDivider {
@@ -58,14 +62,20 @@
     border: none;
     height: 1px;
     width: 9rem;
-    
+
     color: #000;
     background-color: #333232;
-
 }
 
 .orDivider span {
     padding: 0 1rem;
     color: var(--text-color);
     font-weight: 700;
+}
+
+.joinRoom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
