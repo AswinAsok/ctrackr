@@ -107,7 +107,7 @@ const Rooms = () => {
             console.log("User added to room:", membership);
             toast.success("User added to room successfully!");
 
-            const { data, error } = await supabase.from("user_location").insert({
+            const { error } = await supabase.from("user_location").insert({
                 latitude: coordinates.latitude,
                 longitude: coordinates.longitude,
                 user_id: JSON.parse(localStorage.getItem("userObject")!).id,

@@ -10,7 +10,7 @@
 
 .dashboard {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: flex-start;
     margin-bottom: 1rem;
     flex-wrap: wrap;
@@ -122,12 +122,40 @@
 .mapContainer {
     max-height: 100vh;
     height: calc(100vh - 6rem);
-    max-width: 76vw;
+    max-width: 80rem;
     width: 100%;
     border-radius: 10px;
-
     background-color: #fff;
     border-radius: 10px;
-
     padding: 1rem;
+}
+
+@media screen and (min-width: 900px) {
+    .mapContainer {
+        max-width: 30rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .nearbyStudentContainer {
+        max-width: 35rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .mapContainer {
+        max-width: 55vw;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .mapContainer {
+        max-width: 70vw;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .mapContainer {
+        max-width: 75vw;
+    }
 }
