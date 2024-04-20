@@ -97,21 +97,32 @@ const AdminsDashboard = () => {
                                                         styles.nearbyStudentName
                                                     }
                                                 >
-                                                    John Doe
+                                                    {
+                                                        user.raw_user_meta_data
+                                                            .full_name
+                                                    }
                                                 </p>
                                                 <p
                                                     className={
                                                         styles.nearbyStudentLocation
                                                     }
                                                 >
-                                                    {user.email}
+                                                    {user.raw_user_meta_data.email.substring(
+                                                        0,
+                                                        user.raw_user_meta_data.email.indexOf(
+                                                            "@"
+                                                        )
+                                                    )}
                                                 </p>
                                                 <p
                                                     className={
                                                         styles.nearbyStudentPhone
                                                     }
                                                 >
-                                                    +919074750272
+                                                    {
+                                                        user.raw_user_meta_data
+                                                            .phone_number
+                                                    }
                                                 </p>
                                             </div>
                                             <button

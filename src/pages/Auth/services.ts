@@ -53,18 +53,36 @@ export const login = async (
 export const signup = async (
     email: string,
     password: string,
-    supabase: SupabaseClient<any, "public", any>
+    fullName: string,
+    phoneNumber: string,
+    admissionNumber: string,
+    supabase: SupabaseClient<any, "public", any>,
+    navigate: NavigateFunction
 ) => {
     await supabase.auth
         .signUp({
             email: email,
             password: password,
         })
-        .then((response: any) => {
+        .then(async (response: any) => {
             if (response.error) {
                 toast.error(response.error.message);
             } else {
-                toast.success("Signed up successfully!");
+                const { data, error } = await supabase.auth.updateUser({
+                    data: {
+                        full_name: fullName,
+                        phone_number: phoneNumber,
+                        admission_number: admissionNumber,
+                    },
+                });
+
+                if (error) {
+                    toast.error(error.message);
+                    console.log("Iavdae ann Error ayae");
+                } else {
+                    toast.success("Signed up successfully!");
+                    navigate("/login");
+                }
             }
         })
         .catch((error: any) => {
