@@ -20,6 +20,7 @@
     background-color: #fff;
     border-radius: 10px;
     max-height: 90vh;
+    min-height: 90vh;
     height: 100%;
     margin-bottom: 1rem;
     max-width: 21rem;
