@@ -1,125 +1,131 @@
 .adminDashboardContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex;
-  justify-content: center;
-  padding: 2rem;
-
-  background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex;
+    justify-content: center;
+    padding: 2rem;
+   
+    background-color: #f5f5f5;
 }
 
 .dashboard {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
 .nearbyStudentContainer {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 2rem;
-  margin-bottom: 1rem;
-  max-width: 20rem;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    max-width: 20rem;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: scroll;
 }
 
 .nearbyHeading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 .nearByStudents {
-  font-size: 1.5rem;
-  font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 
 .nearbyFilter {
-  font-size: 1rem;
-  color: #6b7280;
+    font-size: 1rem;
+    color: #6b7280;
 }
 
 .searchBar {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .searchInput {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 5px;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
 }
 
 .nearbyStudent {
-  border-bottom: 1px solid #e5e7eb;
-  padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
 }
 
 .nearbyStudentData {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
 
-  max-width: 20rem;
+    max-width: 20rem;
 }
 
 .nearbyStudentImage {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
 }
 
 .nearbyStudentDetails {
-  flex: 1;
-  margin-right: 1rem;
+    flex: 1;
+    margin-right: 1rem;
 }
 
 .nearbyStudentName {
-  font-size: 1rem;
-  font-weight: 500;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .nearbyStudentLocation,
 .nearbyStudentPhone {
-  font-size: 0.9rem;
-  color: #6b7280;
+    font-size: 0.9rem;
+    color: #6b7280;
 }
 
 .alertButton {
-  background-color: #fff;
-  color: #dc2626;
-  border: 1px solid #dc2626;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+    background-color: #fff;
+    color: #dc2626;
+    border: 1px solid #dc2626;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }
 
 .studentLocationData {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .studentLocation {
-  font-size: 0.9rem;
-  color: #6b7280;
+    font-size: 0.9rem;
+    color: #6b7280;
 }
 
 .studentLocationValue {
-  font-size: 0.9rem;
-  font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .mapContainer {
-  margin: 0 1rem;
-  max-height: 100vh;
-  height: 100%;
-  max-width: 80vw;
-  width: 100%;
-  border-radius: 10px;
+    margin: 0 1rem;
+    max-height: 100vh;
+    height: calc(100vh - 5rem);
+    max-width: 80vw;
+    width: 100%;
+    border-radius: 10px;
 
-  background-color: #fff;
-  border-radius: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+
+    padding: 2rem;
 }

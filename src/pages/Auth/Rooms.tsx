@@ -4,10 +4,12 @@ import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { PulseLoader } from "react-spinners";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Rooms = () => {
     const { supabase } = useContext(AppContext);
     const [roomCode, setRoomCode] = useState("");
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState({
         createRoom: false,
@@ -36,6 +38,7 @@ const Rooms = () => {
                 toast.error("Error creating room. Please try again.");
             } else {
                 toast.success("Room created successfully!");
+                navigate("/admins/dashboard/" + roomCode);
             }
 
             setLoading({
