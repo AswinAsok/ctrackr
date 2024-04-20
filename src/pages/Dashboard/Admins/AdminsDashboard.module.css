@@ -114,6 +114,11 @@
     color: #6b7280;
 }
 
+.studentLocation span {
+    font-size: 0.75rem;
+    color: #1d1d1d;
+}
+
 .studentLocationValue {
     font-size: 0.9rem;
     font-weight: 500;

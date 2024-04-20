@@ -3,6 +3,7 @@ import styles from "./UsersDashboard.module.css";
 import AppContext from "../../../contexts/appContext";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { getFormattedDate } from "../../utils";
 
 const UsersDashboard = () => {
     const { supabase } = useContext(AppContext);
@@ -70,6 +71,8 @@ const UsersDashboard = () => {
         updateLocation();
     }, [supabase]);
 
+
+
     const updateLocation = async () => {
         if (!supabase) return;
         const { error } = await supabase
@@ -87,15 +90,8 @@ const UsersDashboard = () => {
             toast.error("Error updating user location. Please try again.");
         } else {
             toast.success("Location updated successfully!");
-            const currentDate = new Date();
-            const period = currentDate.getHours() >= 12 ? "P.M." : "A.M.";
-            const formattedHours = currentDate.getHours() % 12 || 12; // Convert to 12-hour format
-            const formattedMinutes = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
-            const formattedDate = `${currentDate.getDate()}th ${currentDate.toLocaleString(
-                "default",
-                { month: "long" }
-            )}, ${formattedHours}:${formattedMinutes} ${period}`;
-            setLastUpdated(formattedDate);
+
+            setLastUpdated(getFormattedDate());
         }
     };
 

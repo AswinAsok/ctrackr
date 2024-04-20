@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 
@@ -8,36 +7,17 @@ const customIcon = L.icon({
     iconSize: [32, 32],
 });
 
-const MapComponent: React.FC = () => {
-    const [position, setPosition] = useState<[number, number]>([0, 0]); // Initial map center position as state variable
-
-    useEffect(() => {
-        // Check if geolocation is supported
-        if ("geolocation" in navigator) {
-            // Request user's location
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setPosition([latitude, longitude]);
-                    console.log("Latitude:", latitude, "Longitude:", longitude);
-                },
-                (error) => {
-                    console.error("Error getting location:", error);
-                }
-            );
-        } else {
-            console.error("Geolocation is not supported");
-        }
-    }, []);
-
+const MapComponent = ({
+    usersLocation,
+    position,
+}: {
+    usersLocation: any[] | undefined;
+    position: [number, number];
+}) => {
     return (
         position.length > 0 &&
         position[0] !== 0 && (
-            <MapContainer
-                center={position}
-                zoom={13}
-                style={{ height: "calc(100vh - 6rem)" }}
-            >
+            <MapContainer center={position} zoom={13} style={{ height: "calc(100vh - 6rem)" }}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -47,6 +27,16 @@ const MapComponent: React.FC = () => {
                         A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
                 </Marker>
+
+                {usersLocation &&
+                    usersLocation.map((userLocation) => (
+                        <Marker
+                            key={userLocation.id}
+                            position={[userLocation.latitude, userLocation.longitude]}
+                        >
+                            <Popup>{userLocation.user_id}</Popup>
+                        </Marker>
+                    ))}
             </MapContainer>
         )
     );

@@ -4,11 +4,57 @@ import styles from "./AdminsDashboard.module.css";
 import MapComponent from "./MapComponent";
 
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { calculateDistance, convertTimestamp } from "../../utils";
 
 const AdminsDashboard = () => {
     const { supabase } = useContext(AppContext);
     const { room_code } = useParams();
     const [users, setUsers] = useState<any[]>();
+
+    const [position, setPosition] = useState<[number, number]>([0, 0]); // Initial map center position as state variable
+
+    useEffect(() => {
+        // Check if geolocation is supported
+        if ("geolocation" in navigator) {
+            // Request user's location
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setPosition([latitude, longitude]);
+                    console.log("Latitude:", latitude, "Longitude:", longitude);
+                },
+                (error) => {
+                    console.error("Error getting location:", error);
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported");
+        }
+    }, []);
+
+    const [usersLocation, setUsersLocation] = useState<any[]>();
+
+    const getUserLocation = async (userIds: any) => {
+        if (!supabase) return;
+
+        try {
+            const { data: userLocationData, error: userLocationError } = await supabase
+                .from("user_location")
+                .select("*")
+                .in("user_id", userIds);
+
+            if (userLocationError) {
+                console.error("Error fetching user location data:", userLocationError);
+                return;
+            }
+
+            console.log(userLocationData);
+            setUsersLocation(userLocationData);
+        } catch (error) {
+            toast.error("Error fetching user location data");
+        }
+    };
 
     useEffect(() => {
         async function fetchRoomData() {
@@ -22,7 +68,7 @@ const AdminsDashboard = () => {
                     .single();
 
                 if (roomError) {
-                    console.error("Error fetching room data:", roomError);
+                    toast.error("Error fetching room data");
                     return;
                 }
 
@@ -32,12 +78,12 @@ const AdminsDashboard = () => {
                     .eq("room_id", roomData.id);
 
                 if (memberError) {
-                    console.error("Error fetching member data:", memberError);
+                    toast.error("Error fetching room members");
                     return;
                 }
 
                 const userIds = memberData.map((member) => member.user_id);
-
+                getUserLocation(userIds);
                 const { data: userData, error: userError } = await supabase
                     .from("users")
                     .select("*")
@@ -46,7 +92,6 @@ const AdminsDashboard = () => {
                 if (userError) {
                     console.error("Error fetching user data:", userError);
                 } else {
-                    console.log(userData);
                     setUsers(userData);
                 }
             } catch (error) {
@@ -97,10 +142,32 @@ const AdminsDashboard = () => {
                                         </div>
                                         <div className={styles.studentLocationData}>
                                             <p className={styles.studentLocation}>
-                                                Last Updated: 10:57p.m.
+                                                <span>Updated At</span>
+                                                <br /> {convertTimestamp(user.updated_at)}
                                             </p>
                                             <p className={styles.studentLocationValue}>
-                                                1.25Km Away
+                                                {usersLocation &&
+                                                    usersLocation
+                                                        .filter(
+                                                            (location) =>
+                                                                location.user_id === user.id
+                                                        )
+                                                        .map((location) => (
+                                                            <>
+                                                                {calculateDistance(
+                                                                    {
+                                                                        latitude: position[0],
+                                                                        longitude: position[1],
+                                                                    },
+                                                                    {
+                                                                        latitude: location.latitude,
+                                                                        longitude:
+                                                                            location.longitude,
+                                                                    }
+                                                                ).toFixed(2)}{" "}
+                                                                km away
+                                                            </>
+                                                        ))}
                                             </p>
                                         </div>
                                     </div>
@@ -110,7 +177,7 @@ const AdminsDashboard = () => {
                 </div>
                 <div className={styles.mapContainer}>
                     <div className={styles.map}>
-                        <MapComponent />
+                        <MapComponent usersLocation={usersLocation} position={position} />
                     </div>
                 </div>
             </div>
