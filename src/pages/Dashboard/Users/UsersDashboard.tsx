@@ -1,66 +1,116 @@
+import { useContext, useEffect, useState } from "react";
 import styles from "./UsersDashboard.module.css";
+import AppContext from "../../../contexts/appContext";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UsersDashboard = () => {
-  return (
-    <div className={styles.themeContainer}>
-      <div className={styles.userDashboardContainer}>
-        <div className={styles.userProfileContainer}>
-          <div className={styles.userProfile}>
-            <img src="https://via.placeholder.com/75" alt="user" />
-            <div className={styles.userProileTexts}>
-              <p className={styles.userName}>Abel Varghese Shibu</p>
-              <p className={styles.userEmail}>aswinasokofficial@gmail.com</p>
-              <p className={styles.userPhone}>+919074750272</p>
-            </div>
-          </div>
-          <div className={styles.adminContainer}>
-            <p className={styles.adminHeading}>Admin Information</p>
-            <p className={styles.adminName}>Bincy SR</p>
-            <p className={styles.adminPhone}>+91984756810</p>
-          </div>
-        </div>
-        <div className={styles.userLocationContainer}>
-          <div className={styles.userLocation}>
-            <p className={styles.lastUpdated}>Last Updated: 10th August 2021</p>
-            <p className={styles.locationHeading}>Update Location</p>
+    const { supabase } = useContext(AppContext);
+    const [userData, setUserData] = useState<any>();
+    const [adminData, setAdminData] = useState<any>();
 
-            <button className={styles.updateLocationButton}>
-              Update Location
-            </button>
-          </div>
+    const { room_code } = useParams();
+
+    const getUsers = async () => {
+        if (!supabase) return;
+        const { data, error } = await supabase.auth.getUser();
+        if (error) {
+            toast.error("Error fetching user data");
+        } else {
+            setUserData(data.user.user_metadata);
+        }
+
+        const { data: roomData, error: roomError } = await supabase
+            .from("rooms")
+            .select("admin_user_id")
+            .eq("room_code", room_code)
+            .single();
+        if (roomError) {
+            console.error("Error fetching room data:", roomError);
+            return;
+        }
+        const { data: adminData, error: adminError } = await supabase
+            .from("users")
+            .select("*")
+            .eq("id", roomData.admin_user_id);
+        if (adminError) {
+            console.error("Error fetching admin data:", adminError);
+            return;
+        }
+        setAdminData(adminData[0].raw_user_meta_data);
+    };
+    useEffect(() => {
+        getUsers();
+    }, [supabase]);
+
+    return (
+        <div className={styles.themeContainer}>
+            <div className={styles.userDashboardContainer}>
+                <div className={styles.userProfileContainer}>
+                    <div className={styles.userProfile}>
+                        <img src="https://via.placeholder.com/75" alt="user" />
+                        {userData && (
+                            <div className={styles.userProileTexts}>
+                                <p className={styles.userName}>{userData.full_name}</p>
+                                <p className={styles.userEmail}>{userData.email}</p>
+                                <p className={styles.userPhone}>
+                                    {userData.phone_number || "No Phone Number Provided"}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <div
+                        className={styles.adminContainer}
+                        style={{
+                            textAlign: "right",
+                        }}
+                    >
+                        <p className={styles.adminName}>Administrator Info</p>
+                        <p className={styles.adminHeading}>{adminData.full_name}</p>
+                        <p className={styles.userEmail}>{adminData.email}</p>
+                        <p className={styles.userEmail}>{adminData.phone_number}</p>
+                    </div>
+                </div>
+                <div className={styles.userLocationContainer}>
+                    <div className={styles.userLocation}>
+                        <p className={styles.lastUpdated}>Last Updated: 10th August 2021</p>
+                        <p className={styles.locationHeading}>Update Location</p>
+
+                        <button className={styles.updateLocationButton}>Update Location</button>
+                    </div>
+                </div>
+                <div className={styles.notificationsContainer}>
+                    <p className={styles.notificationsHeading}>Notifications</p>
+                    <div className={styles.notificationsContainer}>
+                        <div className={styles.notification}>
+                            <p className={styles.notificationText}>
+                                Your location has been updated
+                            </p>
+                            <p className={styles.notificationTime}>10th August 2021</p>
+                        </div>
+                        <div className={styles.notification}>
+                            <p className={styles.notificationText}>
+                                Your location has been updated
+                            </p>
+                            <p className={styles.notificationTime}>10th August 2021</p>
+                        </div>
+                        <div className={styles.notification}>
+                            <p className={styles.notificationText}>
+                                Your location has been updated
+                            </p>
+                            <p className={styles.notificationTime}>10th August 2021</p>
+                        </div>
+                        <div className={styles.notification}>
+                            <p className={styles.notificationText}>
+                                Your location has been updated
+                            </p>
+                            <p className={styles.notificationTime}>10th August 2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className={styles.notificationsContainer}>
-          <p className={styles.notificationsHeading}>Notifications</p>
-          <div className={styles.notificationsContainer}>
-            <div className={styles.notification}>
-              <p className={styles.notificationText}>
-                Your location has been updated
-              </p>
-              <p className={styles.notificationTime}>10th August 2021</p>
-            </div>
-            <div className={styles.notification}>
-              <p className={styles.notificationText}>
-                Your location has been updated
-              </p>
-              <p className={styles.notificationTime}>10th August 2021</p>
-            </div>
-            <div className={styles.notification}>
-              <p className={styles.notificationText}>
-                Your location has been updated
-              </p>
-              <p className={styles.notificationTime}>10th August 2021</p>
-            </div>
-            <div className={styles.notification}>
-              <p className={styles.notificationText}>
-                Your location has been updated
-              </p>
-              <p className={styles.notificationTime}>10th August 2021</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default UsersDashboard;
