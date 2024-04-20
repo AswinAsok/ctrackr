@@ -25,8 +25,7 @@ export const login = async (
                 const refreshToken = response.data.session.refresh_token;
                 const id = response.data.user.id;
                 const email = response.data.user.email;
-                const phone =
-                    response.data.user.phone || "No phone number provided";
+                const phone = response.data.user.phone || "No phone number provided";
 
                 // Create a single object to store
                 const userObject = {
@@ -68,7 +67,7 @@ export const signup = async (
             if (response.error) {
                 toast.error(response.error.message);
             } else {
-                const { data, error } = await supabase.auth.updateUser({
+                const { error } = await supabase.auth.updateUser({
                     data: {
                         full_name: fullName,
                         phone_number: phoneNumber,
@@ -81,7 +80,7 @@ export const signup = async (
                     console.log("Iavdae ann Error ayae");
                 } else {
                     toast.success("Signed up successfully!");
-                    navigate("/login");
+                    navigate("/");
                 }
             }
         })

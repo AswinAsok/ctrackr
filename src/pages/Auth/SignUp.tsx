@@ -14,20 +14,11 @@ const Signup = () => {
         const password = (e.target as HTMLFormElement).password.value;
         const fullName = (e.target as HTMLFormElement).fullName.value;
         const phoneNumber = (e.target as HTMLFormElement).phoneNumber.value;
-        const admissionNumber = (e.target as HTMLFormElement).admissionNumber
-            .value;
+        const admissionNumber = (e.target as HTMLFormElement).admissionNumber.value;
 
         if (supabase) {
             // Assuming the signup function or another service function will handle these new fields
-            signup(
-                email,
-                password,
-                fullName,
-                phoneNumber,
-                admissionNumber,
-                supabase,
-                navigate
-            );
+            signup(email, password, fullName, phoneNumber, admissionNumber, supabase, navigate);
         }
     };
 

@@ -66,88 +66,40 @@ const AdminsDashboard = () => {
                         <p className={styles.nearbyFilter}>Filter</p>
                     </div>
                     <div className={styles.searchBar}>
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            className={styles.searchInput}
-                        />
+                        <input type="text" placeholder="Search" className={styles.searchInput} />
                     </div>
                     <div className={styles.nearbyStudentList}>
                         {users &&
                             users.map((user) => (
                                 <>
                                     <div className={styles.nearbyStudent}>
-                                        <div
-                                            className={styles.nearbyStudentData}
-                                        >
+                                        <div className={styles.nearbyStudentData}>
                                             <img
                                                 src="https://via.placeholder.com/100"
                                                 alt=""
-                                                className={
-                                                    styles.nearbyStudentImage
-                                                }
+                                                className={styles.nearbyStudentImage}
                                             />
-                                            <div
-                                                className={
-                                                    styles.nearbyStudentDetails
-                                                }
-                                            >
-                                                <p
-                                                    className={
-                                                        styles.nearbyStudentName
-                                                    }
-                                                >
-                                                    {
-                                                        user.raw_user_meta_data
-                                                            .full_name
-                                                    }
+                                            <div className={styles.nearbyStudentDetails}>
+                                                <p className={styles.nearbyStudentName}>
+                                                    {user.raw_user_meta_data.full_name}
                                                 </p>
-                                                <p
-                                                    className={
-                                                        styles.nearbyStudentLocation
-                                                    }
-                                                >
+                                                <p className={styles.nearbyStudentLocation}>
                                                     {user.raw_user_meta_data.email.substring(
                                                         0,
-                                                        user.raw_user_meta_data.email.indexOf(
-                                                            "@"
-                                                        )
+                                                        user.raw_user_meta_data.email.indexOf("@")
                                                     )}
                                                 </p>
-                                                <p
-                                                    className={
-                                                        styles.nearbyStudentPhone
-                                                    }
-                                                >
-                                                    {
-                                                        user.raw_user_meta_data
-                                                            .phone_number
-                                                    }
+                                                <p className={styles.nearbyStudentPhone}>
+                                                    {user.raw_user_meta_data.phone_number}
                                                 </p>
                                             </div>
-                                            <button
-                                                className={styles.alertButton}
-                                            >
-                                                Alert
-                                            </button>
+                                            <button className={styles.alertButton}>Alert</button>
                                         </div>
-                                        <div
-                                            className={
-                                                styles.studentLocationData
-                                            }
-                                        >
-                                            <p
-                                                className={
-                                                    styles.studentLocation
-                                                }
-                                            >
+                                        <div className={styles.studentLocationData}>
+                                            <p className={styles.studentLocation}>
                                                 Last Updated: 10:57p.m.
                                             </p>
-                                            <p
-                                                className={
-                                                    styles.studentLocationValue
-                                                }
-                                            >
+                                            <p className={styles.studentLocationValue}>
                                                 1.25Km Away
                                             </p>
                                         </div>

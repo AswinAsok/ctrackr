@@ -85,6 +85,8 @@ const Rooms = () => {
             console.log("User added to room:", membership);
             toast.success("User added to room successfully!");
             navigate("/users/dashboard/" + roomCode);
+
+            
         }
 
         setLoading({
