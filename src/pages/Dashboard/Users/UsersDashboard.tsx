@@ -9,15 +9,23 @@ const UsersDashboard = () => {
     const [userData, setUserData] = useState<any>();
     const [adminData, setAdminData] = useState<any>();
 
+    const [userId, setUserId] = useState("");
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+
+    const [lastUpdated, setLastUpdated] = useState("");
+
     const { room_code } = useParams();
 
-    const getUsers = async () => {
+    const getUser = async () => {
         if (!supabase) return;
         const { data, error } = await supabase.auth.getUser();
         if (error) {
             toast.error("Error fetching user data");
         } else {
             setUserData(data.user.user_metadata);
+            console.log(data.user);
+            setUserId(data.user.id);
         }
 
         const { data: roomData, error: roomError } = await supabase
@@ -40,8 +48,56 @@ const UsersDashboard = () => {
         setAdminData(adminData[0].raw_user_meta_data);
     };
     useEffect(() => {
-        getUsers();
+        getUser();
+
+        const getUserLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        setLatitude(position.coords.latitude);
+                        setLongitude(position.coords.longitude);
+                    },
+                    (error) => {
+                        console.error("Error getting user location:", error.message);
+                    }
+                );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        };
+
+        getUserLocation();
+        updateLocation();
     }, [supabase]);
+
+    const updateLocation = async () => {
+        if (!supabase) return;
+        const { error } = await supabase
+            .from("user_location")
+            .update({
+                user_id: userId,
+                latitude: latitude,
+                longitude: longitude,
+                email: userData.email,
+                updated_at: new Date().toISOString(),
+            })
+            .eq("user_id", userId);
+
+        if (error) {
+            toast.error("Error updating user location. Please try again.");
+        } else {
+            toast.success("Location updated successfully!");
+            const currentDate = new Date();
+            const period = currentDate.getHours() >= 12 ? "P.M." : "A.M.";
+            const formattedHours = currentDate.getHours() % 12 || 12; // Convert to 12-hour format
+            const formattedMinutes = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
+            const formattedDate = `${currentDate.getDate()}th ${currentDate.toLocaleString(
+                "default",
+                { month: "long" }
+            )}, ${formattedHours}:${formattedMinutes} ${period}`;
+            setLastUpdated(formattedDate);
+        }
+    };
 
     return (
         <div className={styles.themeContainer}>
@@ -51,32 +107,36 @@ const UsersDashboard = () => {
                         <img src="https://via.placeholder.com/75" alt="user" />
                         {userData && (
                             <div className={styles.userProileTexts}>
-                                <p className={styles.userName}>{userData.full_name}</p>
-                                <p className={styles.userEmail}>{userData.email}</p>
+                                <p className={styles.userName}>{userData?.full_name}</p>
+                                <p className={styles.userEmail}>{userData?.email}</p>
                                 <p className={styles.userPhone}>
-                                    {userData.phone_number || "No Phone Number Provided"}
+                                    {userData?.phone_number || "No Phone Number Provided"}
                                 </p>
                             </div>
                         )}
                     </div>
-                    <div
-                        className={styles.adminContainer}
-                        style={{
-                            textAlign: "right",
-                        }}
-                    >
-                        <p className={styles.adminName}>Administrator Info</p>
-                        <p className={styles.adminHeading}>{adminData.full_name}</p>
-                        <p className={styles.userEmail}>{adminData.email}</p>
-                        <p className={styles.userEmail}>{adminData.phone_number}</p>
-                    </div>
+                    {adminData && (
+                        <div
+                            className={styles.adminContainer}
+                            style={{
+                                textAlign: "right",
+                            }}
+                        >
+                            <p className={styles.adminName}>Administrator Info</p>
+                            <p className={styles.adminHeading}>{adminData.full_name}</p>
+                            <p className={styles.userEmail}>{adminData.email}</p>
+                            <p className={styles.userEmail}>{adminData.phone_number}</p>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.userLocationContainer}>
                     <div className={styles.userLocation}>
-                        <p className={styles.lastUpdated}>Last Updated: 10th August 2021</p>
+                        <p className={styles.lastUpdated}>Last Updated: {lastUpdated}</p>
                         <p className={styles.locationHeading}>Update Location</p>
 
-                        <button className={styles.updateLocationButton}>Update Location</button>
+                        <button onClick={updateLocation} className={styles.updateLocationButton}>
+                            Update Location
+                        </button>
                     </div>
                 </div>
                 <div className={styles.notificationsContainer}>
