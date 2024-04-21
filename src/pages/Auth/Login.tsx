@@ -3,7 +3,7 @@ import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { login } from "./services";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 
 const Login = () => {
@@ -22,28 +22,56 @@ const Login = () => {
 
     return (
         <div className={styles.themeContainer}>
+            <nav className={styles.navbarContainer}>
+                <p className={styles.navbarHeaderText}>CTrackr</p>
+                <button className={styles.signUpButton}>SignUp Now</button>
+            </nav>
             <div className={styles.authContainer}>
-                <p className={styles.authHeader}>Login to CTrackr</p>
-                <form onSubmit={handleSubmit} className={styles.formContainer}>
-                    <input
-                        type="email"
-                        name="username"
-                        placeholder="Email"
-                        required
-                        className={styles.authInput}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                        className={styles.authInput}
-                    />
-                    <button type="submit" className={styles.authButton}>
-                        Log In
-                        <PulseLoader loading={loading} color="#ffffff" size={10}/>
-                    </button>
-                </form>
+                <div className={styles.authLeftSide}>
+                    <p className={styles.leftSideFeatures}>Fast • Efficient • Reliable</p>
+                    <p className={styles.authLeftText}>Tracking made easy with ease with CTrackr</p>
+                    <p className={styles.authLeftSubText}>
+                        Track your peers easily and efficiently in real-time and get the best out of
+                        your journey.
+                    </p>
+                </div>
+                <div className={styles.authRightSide}>
+                    <p className={styles.authHeader}>Login to CTrackr Now</p>
+                    <p className={styles.authSubHeader}>
+                        Start Managing Your Peers Faster and Better
+                    </p>
+                    <form onSubmit={handleSubmit} className={styles.formContainer}>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Your email address*</p>
+                            <input
+                                type="email"
+                                name="username"
+                                placeholder="Email"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Password*</p>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.buttons}>
+                            <Link to="/signup">
+                                <button className={styles.secondaryAuthButton}>Sign Up</button>
+                            </Link>
+                            <button type="submit" className={styles.authButton}>
+                                Log In
+                                <PulseLoader loading={loading} color="#ffffff" size={10} />
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
