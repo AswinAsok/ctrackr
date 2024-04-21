@@ -39,10 +39,15 @@
 }
 
 .nearByStudents {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 500;
 }
 
+.nearBySubText {
+    margin-top: -0.25rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
 .nearbyFilter {
     font-size: 1rem;
     color: #6b7280;
@@ -69,7 +74,7 @@
     align-items: center;
     margin-bottom: 0.5rem;
 
-    max-width: 20rem;
+    max-width: 21rem;
 }
 
 .nearbyStudentImage {
@@ -107,7 +112,7 @@
 .studentLocationData {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .studentLocation {
@@ -123,14 +128,28 @@
 .studentLocationValue {
     font-size: 0.9rem;
     font-weight: 500;
+    text-align: right;
+}
+
+.userDistance {
+    font-size: 1.25rem;
+    font-weight: 500;
+   
+    color: #1d1d1d;
+}
+
+.userDistanceUnit {
+    font-size: 0.9rem;
+    margin-top: -0.25rem;
+    color: #6b7280;
 }
 
 .mapContainer {
     max-height: 90vh;
-    height: calc(90vh - 6rem);
+    height: 83vh;
     max-width: 80rem;
     width: 100%;
-    border-radius: 100px;
+    border-radius: 10px;
     background-color: #fff;
 }
 
@@ -162,4 +181,21 @@
     .mapContainer {
         max-width: 75vw;
     }
+}
+
+.userImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #6b7280;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+.userImage {
+    margin: 0;
 }

@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import { calculateDistance, convertTimestamp } from "../../utils";
 import Navbar from "../../../components/Navbar/Navbar";
 
+import ReactTimeAgo from "react-time-ago";
+
 const AdminsDashboard = () => {
     const { supabase } = useContext(AppContext);
     const { room_code } = useParams();
@@ -109,8 +111,13 @@ const AdminsDashboard = () => {
             <div className={styles.dashboard}>
                 <div className={styles.nearbyStudentContainer}>
                     <div className={styles.nearbyHeading}>
-                        <p className={styles.nearByStudents}>Nearby Students</p>
-                        <p className={styles.nearbyFilter}>Filter</p>
+                        <div>
+                            <p className={styles.nearByStudents}>Nearby Students</p>
+                            <p className={styles.nearBySubText}>list of students near you</p>
+                        </div>
+                        <p className={styles.nearbyStudentCount}>
+                            {users && users.length} Students
+                        </p>
                     </div>
                     <div className={styles.searchBar}>
                         <input type="text" placeholder="Search" className={styles.searchInput} />
@@ -121,11 +128,14 @@ const AdminsDashboard = () => {
                                 <>
                                     <div className={styles.nearbyStudent}>
                                         <div className={styles.nearbyStudentData}>
-                                            <img
-                                                src="https://via.placeholder.com/100"
-                                                alt=""
-                                                className={styles.nearbyStudentImage}
-                                            />
+                                            <div className={styles.userImageContainer}>
+                                                <p className={styles.userImage}>
+                                                    {user.raw_user_meta_data.full_name.substring(
+                                                        0,
+                                                        1
+                                                    )}
+                                                </p>
+                                            </div>
                                             <div className={styles.nearbyStudentDetails}>
                                                 <p className={styles.nearbyStudentName}>
                                                     {user.raw_user_meta_data.full_name}
@@ -144,8 +154,12 @@ const AdminsDashboard = () => {
                                         </div>
                                         <div className={styles.studentLocationData}>
                                             <p className={styles.studentLocation}>
-                                                <span>Updated At</span>
-                                                <br /> {convertTimestamp(user.updated_at)}
+                                                <span>Last Seen</span>
+                                                <br />{" "}
+                                                <ReactTimeAgo
+                                                    date={user.updated_at}
+                                                    locale="en-US"
+                                                />
                                             </p>
                                             <p className={styles.studentLocationValue}>
                                                 {usersLocation &&
@@ -156,18 +170,27 @@ const AdminsDashboard = () => {
                                                         )
                                                         .map((location) => (
                                                             <>
-                                                                {calculateDistance(
-                                                                    {
-                                                                        latitude: position[0],
-                                                                        longitude: position[1],
-                                                                    },
-                                                                    {
-                                                                        latitude: location.latitude,
-                                                                        longitude:
-                                                                            location.longitude,
+                                                                <p className={styles.userDistance}>
+                                                                    {calculateDistance(
+                                                                        {
+                                                                            latitude: position[0],
+                                                                            longitude: position[1],
+                                                                        },
+                                                                        {
+                                                                            latitude:
+                                                                                location.latitude,
+                                                                            longitude:
+                                                                                location.longitude,
+                                                                        }
+                                                                    ).toFixed(2)}{" "}
+                                                                </p>
+                                                                <p
+                                                                    className={
+                                                                        styles.userDistanceUnit
                                                                     }
-                                                                ).toFixed(2)}{" "}
-                                                                km away
+                                                                >
+                                                                    km away
+                                                                </p>
                                                             </>
                                                         ))}
                                             </p>
