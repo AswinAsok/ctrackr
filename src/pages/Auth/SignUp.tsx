@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { signup } from "./services";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const { supabase } = useContext(AppContext);
@@ -24,48 +24,86 @@ const Signup = () => {
 
     return (
         <div className={styles.themeContainer}>
+            <nav className={styles.navbarContainer}>
+                <p className={styles.navbarHeaderText}>CTrackr</p>
+                <button className={styles.signUpButton}>SignUp Now</button>
+            </nav>
             <div className={styles.authContainer}>
-                <h1 className={styles.authHeader}>Sign Up to CTrackr</h1>
-                <form onSubmit={handleSubmit} className={styles.formContainer}>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        required
-                        className={styles.authInput}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                        className={styles.authInput}
-                    />
-                    <input
-                        type="text"
-                        name="fullName"
-                        placeholder="Full Name"
-                        required
-                        className={styles.authInput}
-                    />
-                    <input
-                        type="tel"
-                        name="phoneNumber"
-                        placeholder="Phone Number"
-                        required
-                        className={styles.authInput}
-                    />
-                    <input
-                        type="text"
-                        name="admissionNumber"
-                        placeholder="Admission Number"
-                        required
-                        className={styles.authInput}
-                    />
-                    <button type="submit" className={styles.authButton}>
-                        Sign Up
-                    </button>
-                </form>
+                <div className={styles.authLeftSide}>
+                    <p className={styles.leftSideFeatures}>Fast • Efficient • Reliable</p>
+                    <p className={styles.authLeftText}>Hey Travellers, Welcome to CTrackr</p>
+                    <p className={styles.authLeftSubText}>
+                        Track your peers easily and efficiently in real-time and get the best out of
+                        your journey.
+                    </p>
+                </div>
+                <div className={styles.authRightSide}>
+                    <h1 className={styles.authHeader}>Sign Up to CTrackr</h1>
+                    <p className={styles.authSubHeader}>
+                        Start Managing Your Peers Faster and Better
+                    </p>
+                    <form onSubmit={handleSubmit} className={styles.formContainer}>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Your email address*</p>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="shambhu@karikku.com"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Set Your Password*</p>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="******"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Your Full Name*</p>
+                            <input
+                                type="text"
+                                name="fullName"
+                                placeholder="Shambhu K"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Your Phone Number*</p>
+                            <input
+                                type="tel"
+                                name="phoneNumber"
+                                placeholder="9856748595"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Your Admission Number*</p>
+                            <input
+                                type="text"
+                                name="admissionNumber"
+                                placeholder="21/7108"
+                                required
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <div className={styles.buttons}>
+                            <Link to="/login">
+                                <button className={styles.secondaryAuthButton}>Login</button>
+                            </Link>
+                            <button type="submit" className={styles.authButton}>
+                                Sign Up
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

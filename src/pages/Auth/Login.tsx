@@ -46,7 +46,7 @@ const Login = () => {
                             <input
                                 type="email"
                                 name="username"
-                                placeholder="Email"
+                                placeholder="shambhu@karikku.com"
                                 required
                                 className={styles.authInput}
                             />
@@ -56,7 +56,7 @@ const Login = () => {
                             <input
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="******"
                                 required
                                 className={styles.authInput}
                             />

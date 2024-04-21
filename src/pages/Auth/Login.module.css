@@ -86,7 +86,7 @@
     font-family: "DM Sans", sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #1d1d1d;
+    color: #555555;
 }
 
 .authInput {
@@ -98,8 +98,12 @@
     padding: 0.5rem 1rem;
     border: 1px solid #e9ecef;
     border-radius: 0.5rem;
-    margin-top: 0.5rem;
+
     width: 100%;
+}
+
+.authInput::placeholder {
+    font-size: 0.9rem;
 }
 
 .authButton {
@@ -115,6 +119,13 @@
     margin-top: 1rem;
 
     min-width: 8rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
 }
 
 .secondaryAuthButton {
