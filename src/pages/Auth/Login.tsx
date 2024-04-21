@@ -62,13 +62,13 @@ const Login = () => {
                             />
                         </div>
                         <div className={styles.buttons}>
-                            <Link to="/signup">
-                                <button className={styles.secondaryAuthButton}>Sign Up</button>
-                            </Link>
                             <button type="submit" className={styles.authButton}>
                                 Log In
                                 <PulseLoader loading={loading} color="#ffffff" size={10} />
                             </button>
+                            <Link to="/signup">
+                                <button className={styles.secondaryAuthButton}>Sign Up</button>
+                            </Link>
                         </div>
                     </form>
                 </div>
