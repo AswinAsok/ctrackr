@@ -135,29 +135,54 @@ const Rooms = () => {
 
     return (
         <div className={styles.themeContainer}>
-            <div className={styles.formContainer}>
-                <h2 className={styles.authHeader}>Room Manager</h2>
-                <button className={styles.authButton} onClick={createRoom}>
-                    Create Room{" "}
-                    <PulseLoader loading={loading.createRoom} color="#ffffff" size={10} />
-                </button>
-                <div className={styles.orDivider}>
-                    <hr />
-                    <span>OR</span>
-                    <hr />
+            <nav className={styles.navbarContainer}>
+                <p className={styles.navbarHeaderText}>CTrackr</p>
+                <button className={styles.signUpButton}>SignUp Now</button>
+            </nav>
+            <div className={styles.authContainer}>
+                <div className={styles.authLeftSide}>
+                    <p className={styles.leftSideFeatures}>Create • Share • Track</p>
+                    <p className={styles.authLeftText}>Create a room or join an existing room.</p>
+                    <p className={styles.authLeftSubText}>
+                        Create a room to track your peers or join an existing room to be tracked by
+                        your peers.
+                    </p>
                 </div>
-                <div className={styles.joinRoom}>
-                    <input
-                        type="text"
-                        value={roomCode}
-                        onChange={(e) => setRoomCode(e.target.value)}
-                        placeholder="Enter room code"
-                        className={styles.authInput}
-                    />
-                    <button className={styles.authButton} onClick={addUserToRoom}>
-                        Join Room
-                        <PulseLoader loading={loading.addUserToRoom} color="#ffffff" size={10} />
+
+                <div className={styles.formContainer}>
+                    <h2 className={styles.authHeader}>Room Manager</h2>
+                    <p className={styles.authSubHeader}>
+                        Click below to create a room or enter a room code to join an existing room.
+                    </p>
+                    <button className={styles.authButton} onClick={createRoom}>
+                        Create Room{" "}
+                        <PulseLoader loading={loading.createRoom} color="#ffffff" size={10} />
                     </button>
+                    <div className={styles.orDivider}>
+                        <hr />
+                        <span>OR</span>
+                        <hr />
+                    </div>
+                    <div className={styles.joinRoom}>
+                        <div className={styles.inputContainer}>
+                            <p className={styles.inputLabel}>Enter Room Code*</p>
+                            <input
+                                type="text"
+                                value={roomCode}
+                                onChange={(e) => setRoomCode(e.target.value)}
+                                placeholder="Enter room code"
+                                className={styles.authInput}
+                            />
+                        </div>
+                        <button className={styles.authButton} onClick={addUserToRoom}>
+                            Join Room
+                            <PulseLoader
+                                loading={loading.addUserToRoom}
+                                color="#ffffff"
+                                size={10}
+                            />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
