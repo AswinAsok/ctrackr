@@ -5,6 +5,7 @@ import { login } from "./services";
 
 import { Link, useNavigate } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -22,10 +23,7 @@ const Login = () => {
 
     return (
         <div className={styles.themeContainer}>
-            <nav className={styles.navbarContainer}>
-                <p className={styles.navbarHeaderText}>CTrackr</p>
-                <button className={styles.signUpButton}>SignUp Now</button>
-            </nav>
+            <Navbar />
             <div className={styles.authContainer}>
                 <div className={styles.authLeftSide}>
                     <p className={styles.leftSideFeatures}>Fast • Efficient • Reliable</p>

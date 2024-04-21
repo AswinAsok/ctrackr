@@ -6,30 +6,7 @@
     background-color: #f8f9fa;
 }
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-}
 
-.navbarContainer {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbarHeaderText {
-    font-family: "DM Sans", sans-serif;
-
-    font-size: 2rem;
-    font-weight: 900;
-    color: #1d1d1d;
-}
 
 .authContainer {
     display: flex;
@@ -40,18 +17,6 @@ nav {
     column-gap: 4rem;
 
     padding: 1rem;
-}
-
-.signUpButton {
-    background-color: #000000;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    border: none;
-    font-family: "DM Sans", sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
 }
 
 .authHeader {

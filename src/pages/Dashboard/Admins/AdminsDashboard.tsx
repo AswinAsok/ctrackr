@@ -6,6 +6,7 @@ import MapComponent from "./MapComponent";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { calculateDistance, convertTimestamp } from "../../utils";
+import Navbar from "../../../components/Navbar/Navbar";
 
 const AdminsDashboard = () => {
     const { supabase } = useContext(AppContext);
@@ -104,6 +105,7 @@ const AdminsDashboard = () => {
 
     return (
         <div className={styles.adminDashboardContainer}>
+            <Navbar />
             <div className={styles.dashboard}>
                 <div className={styles.nearbyStudentContainer}>
                     <div className={styles.nearbyHeading}>

@@ -3,6 +3,7 @@ import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { signup } from "./services";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Signup = () => {
     const { supabase } = useContext(AppContext);
@@ -24,10 +25,7 @@ const Signup = () => {
 
     return (
         <div className={styles.themeContainer}>
-            <nav className={styles.navbarContainer}>
-                <p className={styles.navbarHeaderText}>CTrackr</p>
-                <button className={styles.signUpButton}>SignUp Now</button>
-            </nav>
+            <Navbar />
             <div className={styles.authContainer}>
                 <div className={styles.authLeftSide}>
                     <p className={styles.leftSideFeatures}>Fast • Efficient • Reliable</p>

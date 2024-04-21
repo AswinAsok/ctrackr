@@ -17,7 +17,11 @@ const MapComponent = ({
     return (
         position.length > 0 &&
         position[0] !== 0 && (
-            <MapContainer center={position} zoom={13} style={{ height: "calc(100vh - 6rem)" }}>
+            <MapContainer
+                center={position}
+                zoom={13}
+                style={{ height: "83vh", borderRadius: "10px" }}
+            >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

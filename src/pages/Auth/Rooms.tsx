@@ -5,6 +5,7 @@ import styles from "./Login.module.css";
 import { PulseLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Rooms = () => {
     const { supabase } = useContext(AppContext);
@@ -135,10 +136,7 @@ const Rooms = () => {
 
     return (
         <div className={styles.themeContainer}>
-            <nav className={styles.navbarContainer}>
-                <p className={styles.navbarHeaderText}>CTrackr</p>
-                <button className={styles.signUpButton}>SignUp Now</button>
-            </nav>
+            <Navbar />
             <div className={styles.authContainer}>
                 <div className={styles.authLeftSide}>
                     <p className={styles.leftSideFeatures}>Create • Share • Track</p>

@@ -14,19 +14,20 @@
     align-items: flex-start;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+
+    margin-top: 9vh;
 }
 
 .nearbyStudentContainer {
     background-color: #fff;
     border-radius: 10px;
-    max-height: 90vh;
-    min-height: 90vh;
+    max-height: 80vh;
+    min-height: 80vh;
     height: 100%;
-    margin-bottom: 1rem;
     max-width: 21rem;
     width: 100%;
     padding: 1rem;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 
@@ -125,14 +126,12 @@
 }
 
 .mapContainer {
-    max-height: 100vh;
-    height: calc(100vh - 6rem);
+    max-height: 90vh;
+    height: calc(90vh - 6rem);
     max-width: 80rem;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 100px;
     background-color: #fff;
-    border-radius: 10px;
-    padding: 1rem;
 }
 
 @media screen and (min-width: 900px) {
