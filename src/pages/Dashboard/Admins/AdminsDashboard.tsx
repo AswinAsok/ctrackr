@@ -52,7 +52,6 @@ const AdminsDashboard = () => {
                 return;
             }
 
-            console.log(userLocationData);
             setUsersLocation(userLocationData);
         } catch (error) {
             toast.error("Error fetching user location data");
@@ -156,10 +155,12 @@ const AdminsDashboard = () => {
                                             <p className={styles.studentLocation}>
                                                 <span>Last Seen</span>
                                                 <br />{" "}
-                                                <ReactTimeAgo
-                                                    date={user.updated_at}
-                                                    locale="en-US"
-                                                />
+                                                {usersLocation && (
+                                                    <ReactTimeAgo
+                                                        date={usersLocation[0].updated_at}
+                                                        locale="en-US"
+                                                    />
+                                                )}
                                             </p>
                                             <p className={styles.studentLocationValue}>
                                                 {usersLocation &&

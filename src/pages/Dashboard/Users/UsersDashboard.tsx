@@ -25,7 +25,6 @@ const UsersDashboard = () => {
             toast.error("Error fetching user data");
         } else {
             setUserData(data.user.user_metadata);
-            console.log(data.user);
             setUserId(data.user.id);
         }
 
