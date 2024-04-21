@@ -36,6 +36,8 @@
     align-items: center;
     flex-wrap: wrap;
     column-gap: 4rem;
+
+    padding: 1rem;
 }
 
 .signUpButton {
@@ -163,4 +165,16 @@
 
 .leftSideFeatures {
     margin-bottom: 1rem;
+}
+
+@media (max-width: 748px) {
+    .authContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .authRightSide {
+        margin-top: 2rem;
+    }
 }
