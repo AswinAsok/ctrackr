@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userObject, setUserObject] = useState<any>();
   useEffect(() => {
-    setUserObject(localStorage.getItem("userObject")!);
+    setUserObject(JSON.parse(localStorage.getItem("userObject")!));
     if (userObject != "") {
       setIsAuthenticated(true);
       console.log(userObject);
