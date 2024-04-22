@@ -93,7 +93,7 @@ const Signup = () => {
                             />
                         </div>
                         <div className={styles.buttons}>
-                            <Link to="/login">
+                            <Link to="/">
                                 <button className={styles.secondaryAuthButton}>Login</button>
                             </Link>
                             <button type="submit" className={styles.authButton}>

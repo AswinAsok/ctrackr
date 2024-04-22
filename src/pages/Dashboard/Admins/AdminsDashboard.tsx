@@ -5,7 +5,7 @@ import MapComponent from "./MapComponent";
 
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { calculateDistance, convertTimestamp } from "../../utils";
+import { calculateDistance } from "../../utils";
 import Navbar from "../../../components/Navbar/Navbar";
 
 import ReactTimeAgo from "react-time-ago";
@@ -108,97 +108,124 @@ const AdminsDashboard = () => {
         <div className={styles.adminDashboardContainer}>
             <Navbar />
             <div className={styles.dashboard}>
-                <div className={styles.nearbyStudentContainer}>
-                    <div className={styles.nearbyHeading}>
-                        <div>
-                            <p className={styles.nearByStudents}>Nearby Students</p>
-                            <p className={styles.nearBySubText}>list of students near you</p>
+                <div className={styles.leftSideContainer}>
+                    <div className={styles.roomInformation}>
+                        <div className={styles.roomHeading}>
+                            <p className={styles.roomName}>Room Name</p>
+                            <p className={styles.roomCode}>{room_code}</p>
                         </div>
-                        <p className={styles.nearbyStudentCount}>
-                            {users && users.length} Students
-                        </p>
+                        <div className={styles.roomDetails}>
+                            <div className={styles.roomDetail}>
+                                <p className={styles.roomDetailHeading}>Room Members</p>
+                                <p className={styles.roomDetailValue}>
+                                    {users && users.length} Members
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div className={styles.searchBar}>
-                        <input type="text" placeholder="Search" className={styles.searchInput} />
-                    </div>
-                    <div className={styles.nearbyStudentList}>
-                        {users &&
-                            users.map((user) => (
-                                <>
-                                    <div className={styles.nearbyStudent}>
-                                        <div className={styles.nearbyStudentData}>
-                                            <div className={styles.userImageContainer}>
-                                                <p className={styles.userImage}>
-                                                    {user.raw_user_meta_data.full_name.substring(
-                                                        0,
-                                                        1
+                    <div className={styles.nearbyStudentContainer}>
+                        <div className={styles.nearbyHeading}>
+                            <div>
+                                <p className={styles.nearByStudents}>Nearby Students</p>
+                                <p className={styles.nearBySubText}>list of students near you</p>
+                            </div>
+                        </div>
+                        <div className={styles.searchBar}>
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className={styles.searchInput}
+                            />
+                        </div>
+                        <div className={styles.nearbyStudentList}>
+                            {users &&
+                                users.map((user) => (
+                                    <>
+                                        <div className={styles.nearbyStudent}>
+                                            <div className={styles.nearbyStudentData}>
+                                                <div className={styles.userImageContainer}>
+                                                    <p className={styles.userImage}>
+                                                        {user.raw_user_meta_data.full_name.substring(
+                                                            0,
+                                                            1
+                                                        )}
+                                                    </p>
+                                                </div>
+                                                <div className={styles.nearbyStudentDetails}>
+                                                    <p className={styles.nearbyStudentName}>
+                                                        {user.raw_user_meta_data.full_name}
+                                                    </p>
+                                                    <p className={styles.nearbyStudentLocation}>
+                                                        {user.raw_user_meta_data.email.substring(
+                                                            0,
+                                                            user.raw_user_meta_data.email.indexOf(
+                                                                "@"
+                                                            )
+                                                        )}
+                                                    </p>
+                                                    <p className={styles.nearbyStudentPhone}>
+                                                        {user.raw_user_meta_data.phone_number}
+                                                    </p>
+                                                </div>
+                                                <button className={styles.alertButton}>
+                                                    Alert
+                                                </button>
+                                            </div>
+                                            <div className={styles.studentLocationData}>
+                                                <p className={styles.studentLocation}>
+                                                    <span>Last Seen</span>
+                                                    <br />{" "}
+                                                    {usersLocation && (
+                                                        <ReactTimeAgo
+                                                            date={usersLocation[0].updated_at}
+                                                            locale="en-US"
+                                                        />
                                                     )}
                                                 </p>
-                                            </div>
-                                            <div className={styles.nearbyStudentDetails}>
-                                                <p className={styles.nearbyStudentName}>
-                                                    {user.raw_user_meta_data.full_name}
-                                                </p>
-                                                <p className={styles.nearbyStudentLocation}>
-                                                    {user.raw_user_meta_data.email.substring(
-                                                        0,
-                                                        user.raw_user_meta_data.email.indexOf("@")
-                                                    )}
-                                                </p>
-                                                <p className={styles.nearbyStudentPhone}>
-                                                    {user.raw_user_meta_data.phone_number}
-                                                </p>
-                                            </div>
-                                            <button className={styles.alertButton}>Alert</button>
-                                        </div>
-                                        <div className={styles.studentLocationData}>
-                                            <p className={styles.studentLocation}>
-                                                <span>Last Seen</span>
-                                                <br />{" "}
-                                                {usersLocation && (
-                                                    <ReactTimeAgo
-                                                        date={usersLocation[0].updated_at}
-                                                        locale="en-US"
-                                                    />
-                                                )}
-                                            </p>
-                                            <p className={styles.studentLocationValue}>
-                                                {usersLocation &&
-                                                    usersLocation
-                                                        .filter(
-                                                            (location) =>
-                                                                location.user_id === user.id
-                                                        )
-                                                        .map((location) => (
-                                                            <>
-                                                                <p className={styles.userDistance}>
-                                                                    {calculateDistance(
-                                                                        {
-                                                                            latitude: position[0],
-                                                                            longitude: position[1],
-                                                                        },
-                                                                        {
-                                                                            latitude:
-                                                                                location.latitude,
-                                                                            longitude:
-                                                                                location.longitude,
+                                                <p className={styles.studentLocationValue}>
+                                                    {usersLocation &&
+                                                        usersLocation
+                                                            .filter(
+                                                                (location) =>
+                                                                    location.user_id === user.id
+                                                            )
+                                                            .map((location) => (
+                                                                <>
+                                                                    <p
+                                                                        className={
+                                                                            styles.userDistance
                                                                         }
-                                                                    ).toFixed(2)}{" "}
-                                                                </p>
-                                                                <p
-                                                                    className={
-                                                                        styles.userDistanceUnit
-                                                                    }
-                                                                >
-                                                                    km away
-                                                                </p>
-                                                            </>
-                                                        ))}
-                                            </p>
+                                                                    >
+                                                                        {calculateDistance(
+                                                                            {
+                                                                                latitude:
+                                                                                    position[0],
+                                                                                longitude:
+                                                                                    position[1],
+                                                                            },
+                                                                            {
+                                                                                latitude:
+                                                                                    location.latitude,
+                                                                                longitude:
+                                                                                    location.longitude,
+                                                                            }
+                                                                        ).toFixed(2)}{" "}
+                                                                    </p>
+                                                                    <p
+                                                                        className={
+                                                                            styles.userDistanceUnit
+                                                                        }
+                                                                    >
+                                                                        km away
+                                                                    </p>
+                                                                </>
+                                                            ))}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
-                            ))}
+                                    </>
+                                ))}
+                        </div>
                     </div>
                 </div>
                 <div className={styles.mapContainer}>

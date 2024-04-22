@@ -3,10 +3,11 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #f9f9f9;
+    opacity: 1;
+    background-image: radial-gradient(#f1f1f1 2px, #f9f9f9 2px);
+    background-size: 40px 40px;
 }
-
-
 
 .authContainer {
     display: flex;

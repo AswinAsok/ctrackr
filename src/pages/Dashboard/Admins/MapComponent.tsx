@@ -7,6 +7,11 @@ const customIcon = L.icon({
     iconSize: [32, 32],
 });
 
+const userIcon = L.icon({
+    iconUrl: "/pin.png",
+    iconSize: [32, 32],
+});
+
 const MapComponent = ({
     usersLocation,
     position,
@@ -28,7 +33,7 @@ const MapComponent = ({
                 />
                 <Marker position={position} icon={customIcon}>
                     <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
+                        <b>Your Location</b>
                     </Popup>
                 </Marker>
 
@@ -37,8 +42,9 @@ const MapComponent = ({
                         <Marker
                             key={userLocation.id}
                             position={[userLocation.latitude, userLocation.longitude]}
+                            icon={userIcon}
                         >
-                            <Popup>{userLocation.user_id}</Popup>
+                            <Popup>{userLocation.email}</Popup>
                         </Marker>
                     ))}
             </MapContainer>
