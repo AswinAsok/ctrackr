@@ -3,7 +3,7 @@ import AppContext from "../../../contexts/appContext";
 import styles from "./AdminsDashboard.module.css";
 import MapComponent from "./MapComponent";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { calculateDistance } from "../../utils";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -14,6 +14,8 @@ const AdminsDashboard = () => {
     const { supabase } = useContext(AppContext);
     const { room_code } = useParams();
     const [users, setUsers] = useState<any[]>();
+
+    const navigate = useNavigate();
 
     const [position, setPosition] = useState<[number, number]>([0, 0]); // Initial map center position as state variable
 
@@ -71,6 +73,7 @@ const AdminsDashboard = () => {
 
                 if (roomError) {
                     toast.error("Error fetching room data");
+                    navigate("/");
                     return;
                 }
 

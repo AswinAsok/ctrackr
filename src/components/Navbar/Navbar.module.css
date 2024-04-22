@@ -36,3 +36,19 @@ nav {
     font-size: 1rem;
     cursor: pointer;
 }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+
+    column-gap: 1rem;
+}
+
+.welcomeText {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1d1d1d;
+}

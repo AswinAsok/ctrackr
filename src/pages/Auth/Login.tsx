@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../../contexts/appContext";
 import styles from "./Login.module.css";
 import { login } from "./services";
@@ -20,6 +20,10 @@ const Login = () => {
             login(username, password, supabase, navigate, setLoading);
         }
     };
+
+    useEffect(() => {
+        localStorage.removeItem("userObject");
+    }, []);
 
     return (
         <div className={styles.themeContainer}>
