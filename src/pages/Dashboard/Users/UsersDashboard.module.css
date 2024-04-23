@@ -12,7 +12,9 @@
   max-width: 90vw;
   display: block;
   margin: auto;
-  min-height: 100vh;
+  min-height: 81vh;
+
+  margin-top: 9vh;
 
   font-family: "DM Sans", sans-serif;
 }

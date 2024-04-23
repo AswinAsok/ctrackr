@@ -4,6 +4,8 @@ import AppContext from "../../../contexts/appContext";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getFormattedDate } from "../../utils";
+import Navbar from "../../../components/Navbar/Navbar";
+import Footer from "../../../components/Footer/Footer";
 
 const UsersDashboard = () => {
     const { supabase } = useContext(AppContext);
@@ -70,8 +72,6 @@ const UsersDashboard = () => {
         updateLocation();
     }, [supabase]);
 
-
-
     const updateLocation = async () => {
         if (!supabase) return;
         const { error } = await supabase
@@ -95,76 +95,83 @@ const UsersDashboard = () => {
     };
 
     return (
-        <div className={styles.themeContainer}>
-            <div className={styles.userDashboardContainer}>
-                <div className={styles.userProfileContainer}>
-                    <div className={styles.userProfile}>
-                        <img src="https://via.placeholder.com/75" alt="user" />
-                        {userData && (
-                            <div className={styles.userProileTexts}>
-                                <p className={styles.userName}>{userData?.full_name}</p>
-                                <p className={styles.userEmail}>{userData?.email}</p>
-                                <p className={styles.userPhone}>
-                                    {userData?.phone_number || "No Phone Number Provided"}
-                                </p>
+        <>
+            <div className={styles.themeContainer}>
+                <Navbar />
+                <div className={styles.userDashboardContainer}>
+                    <div className={styles.userProfileContainer}>
+                        <div className={styles.userProfile}>
+                            <img src="https://via.placeholder.com/75" alt="user" />
+                            {userData && (
+                                <div className={styles.userProileTexts}>
+                                    <p className={styles.userName}>{userData?.full_name}</p>
+                                    <p className={styles.userEmail}>{userData?.email}</p>
+                                    <p className={styles.userPhone}>
+                                        {userData?.phone_number || "No Phone Number Provided"}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                        {adminData && (
+                            <div
+                                className={styles.adminContainer}
+                                style={{
+                                    textAlign: "right",
+                                }}
+                            >
+                                <p className={styles.adminName}>Administrator Info</p>
+                                <p className={styles.adminHeading}>{adminData.full_name}</p>
+                                <p className={styles.userEmail}>{adminData.email}</p>
+                                <p className={styles.userEmail}>{adminData.phone_number}</p>
                             </div>
                         )}
                     </div>
-                    {adminData && (
-                        <div
-                            className={styles.adminContainer}
-                            style={{
-                                textAlign: "right",
-                            }}
-                        >
-                            <p className={styles.adminName}>Administrator Info</p>
-                            <p className={styles.adminHeading}>{adminData.full_name}</p>
-                            <p className={styles.userEmail}>{adminData.email}</p>
-                            <p className={styles.userEmail}>{adminData.phone_number}</p>
-                        </div>
-                    )}
-                </div>
-                <div className={styles.userLocationContainer}>
-                    <div className={styles.userLocation}>
-                        <p className={styles.lastUpdated}>Last Updated: {lastUpdated}</p>
-                        <p className={styles.locationHeading}>Update Location</p>
+                    <div className={styles.userLocationContainer}>
+                        <div className={styles.userLocation}>
+                            <p className={styles.lastUpdated}>Last Updated: {lastUpdated}</p>
+                            <p className={styles.locationHeading}>Update Location</p>
 
-                        <button onClick={updateLocation} className={styles.updateLocationButton}>
-                            Update Location
-                        </button>
+                            <button
+                                onClick={updateLocation}
+                                className={styles.updateLocationButton}
+                            >
+                                Update Location
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.notificationsContainer}>
-                    <p className={styles.notificationsHeading}>Notifications</p>
                     <div className={styles.notificationsContainer}>
-                        <div className={styles.notification}>
-                            <p className={styles.notificationText}>
-                                Your location has been updated
-                            </p>
-                            <p className={styles.notificationTime}>10th August 2021</p>
-                        </div>
-                        <div className={styles.notification}>
-                            <p className={styles.notificationText}>
-                                Your location has been updated
-                            </p>
-                            <p className={styles.notificationTime}>10th August 2021</p>
-                        </div>
-                        <div className={styles.notification}>
-                            <p className={styles.notificationText}>
-                                Your location has been updated
-                            </p>
-                            <p className={styles.notificationTime}>10th August 2021</p>
-                        </div>
-                        <div className={styles.notification}>
-                            <p className={styles.notificationText}>
-                                Your location has been updated
-                            </p>
-                            <p className={styles.notificationTime}>10th August 2021</p>
+                        <p className={styles.notificationsHeading}>Notifications</p>
+                        <div className={styles.notificationsContainer}>
+                            <div className={styles.notification}>
+                                <p className={styles.notificationText}>
+                                    Your location has been updated
+                                </p>
+                                <p className={styles.notificationTime}>10th August 2021</p>
+                            </div>
+                            <div className={styles.notification}>
+                                <p className={styles.notificationText}>
+                                    Your location has been updated
+                                </p>
+                                <p className={styles.notificationTime}>10th August 2021</p>
+                            </div>
+                            <div className={styles.notification}>
+                                <p className={styles.notificationText}>
+                                    Your location has been updated
+                                </p>
+                                <p className={styles.notificationTime}>10th August 2021</p>
+                            </div>
+                            <div className={styles.notification}>
+                                <p className={styles.notificationText}>
+                                    Your location has been updated
+                                </p>
+                                <p className={styles.notificationTime}>10th August 2021</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

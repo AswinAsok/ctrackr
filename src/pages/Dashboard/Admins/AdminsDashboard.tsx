@@ -61,8 +61,8 @@ const AdminsDashboard = () => {
     };
 
     useEffect(() => {
+        if (!supabase) return;
         const fetchData = async () => {
-            if (!supabase) return;
             try {
                 const { data: roomData, error: roomError } = await supabase
                     .from("rooms")
@@ -77,6 +77,32 @@ const AdminsDashboard = () => {
                 }
 
                 const roomId = roomData.id;
+
+                // Fetch initial room members
+                const { data: initialMemberData, error: initialMemberError } = await supabase
+                    .from("room_members")
+                    .select("user_id")
+                    .eq("room_id", roomId);
+
+                if (initialMemberError) {
+                    toast.error("Error fetching initial room members");
+                    return;
+                }
+
+                const initialUserIds = initialMemberData.map((member) => member.user_id);
+                getUserLocation(initialUserIds);
+
+                // Fetch initial user data
+                const { data: initialUserData, error: initialUserError } = await supabase
+                    .from("users")
+                    .select("*")
+                    .in("id", initialUserIds);
+
+                if (initialUserError) {
+                    console.error("Error fetching initial user data:", initialUserError);
+                } else {
+                    setUsers(initialUserData);
+                }
 
                 const handleMemberChanges = async (payload: { eventType: string; }) => {
                     if (
@@ -106,6 +132,8 @@ const AdminsDashboard = () => {
                             console.error("Error fetching user data:", userError);
                         } else {
                             setUsers(userData);
+                            const audio = new Audio("/ting.mp3");
+                            audio.play();
                         }
                     }
                 };
