@@ -251,3 +251,13 @@
         margin-bottom: 1rem;
     }
 }
+
+.refreshButton {
+    background-color: #1d1d1d;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+
+    border: none;
+}

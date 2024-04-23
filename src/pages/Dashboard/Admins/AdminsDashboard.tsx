@@ -164,6 +164,12 @@ const AdminsDashboard = () => {
         fetchData();
     }, [room_code]);
 
+    const handleRefresh = () => {
+        const userIds = users?.map((user) => user.id);
+        getUserLocation(userIds);
+        toast.success("Data refreshed successfully!");
+    };
+
     return (
         <div className={styles.adminDashboardContainer}>
             <Navbar />
@@ -189,6 +195,9 @@ const AdminsDashboard = () => {
                                 <p className={styles.nearByStudents}>Nearby Students</p>
                                 <p className={styles.nearBySubText}>list of students near you</p>
                             </div>
+                            <button className={styles.refreshButton} onClick={handleRefresh}>
+                                Refresh
+                            </button>
                         </div>
                         <div className={styles.searchBar}>
                             <input
@@ -242,9 +251,6 @@ const AdminsDashboard = () => {
                                                             {user.raw_user_meta_data.phone_number}
                                                         </p>
                                                     </div>
-                                                    {/* <button className={styles.alertButton}>
-                                                    Alert
-                                                </button> */}
                                                 </div>
                                                 <div className={styles.studentLocationData}>
                                                     <p className={styles.studentLocation}>
