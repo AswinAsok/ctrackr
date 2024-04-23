@@ -72,6 +72,11 @@ const Rooms = () => {
     };
 
     const addUserToRoom = async () => {
+        if (!roomCode || roomCode.length == 0) {
+            toast.error("Please enter a room code.");
+            return;
+        }
+
         if (!supabase) return;
         setLoading({
             createRoom: false,
@@ -161,7 +166,7 @@ const Rooms = () => {
                         <span>OR</span>
                         <hr />
                     </div>
-                    <div className={styles.joinRoom}>
+                    <form className={styles.joinRoom}>
                         <div className={styles.inputContainer}>
                             <p className={styles.inputLabel}>Enter Room Code*</p>
                             <input
@@ -172,7 +177,13 @@ const Rooms = () => {
                                 className={styles.authInput}
                             />
                         </div>
-                        <button className={styles.authButton} onClick={addUserToRoom}>
+                        <button
+                            className={styles.authButton}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                addUserToRoom();
+                            }}
+                        >
                             Join Room
                             <PulseLoader
                                 loading={loading.addUserToRoom}
@@ -180,7 +191,7 @@ const Rooms = () => {
                                 size={10}
                             />
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

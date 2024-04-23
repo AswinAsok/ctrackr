@@ -7,6 +7,7 @@
     opacity: 1;
     background-image: radial-gradient(#f1f1f1 2px, #f9f9f9 2px);
     background-size: 40px 40px;
+    margin-bottom: 10vh;
 }
 
 .authContainer {
@@ -154,7 +155,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 7rem;
+        margin-top: 10vh;
+        
     }
 
     .authRightSide {
