@@ -6,10 +6,12 @@ import { PulseLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
+import { checkAuth } from "../utils";
 
 const Rooms = () => {
     const { supabase } = useContext(AppContext);
     const [roomCode, setRoomCode] = useState("");
+    const [myRooms, setMyRooms] = useState<any>([]); // [room_code, room_code, ...
     const navigate = useNavigate();
 
     const [coordinates, setCoordinates] = useState({
@@ -17,7 +19,14 @@ const Rooms = () => {
         longitude: 0,
     });
 
+    const [loading, setLoading] = useState({
+        createRoom: false,
+        addUserToRoom: false,
+    });
+
     useEffect(() => {
+        checkAuth({ navigate, toast });
+
         let localCoordinates = {
             latitude: 0,
             longitude: 0,
@@ -32,14 +41,27 @@ const Rooms = () => {
             },
             (error) => {
                 console.error("Error getting location:", error);
+                toast.error("Error getting location. Please try again.");
             }
         );
+
+        getMyRooms();
     }, []);
 
-    const [loading, setLoading] = useState({
-        createRoom: false,
-        addUserToRoom: false,
-    });
+    const getMyRooms = async () => {
+        if (!supabase) return;
+        const { data: rooms, error } = await supabase
+            .from("rooms")
+            .select("room_code")
+            .eq("admin_user_id", JSON.parse(localStorage.getItem("userObject")!).id);
+
+        if (error) {
+            console.error("Error fetching rooms:", error);
+        } else {
+            setMyRooms(rooms);
+            console.log("Rooms:", rooms);
+        }
+    };
 
     const createRoom = async () => {
         if (supabase) {
@@ -61,13 +83,37 @@ const Rooms = () => {
                 toast.error("Error creating room. Please try again.");
             } else {
                 toast.success("Room created successfully!");
-                navigate("/admins/dashboard/" + roomCode);
+                navigate("/admin/dashboard/" + roomCode);
             }
 
             setLoading({
                 createRoom: false,
                 addUserToRoom: false,
             });
+        }
+    };
+
+    const updateLocation = async () => {
+        if (!supabase) return;
+
+        const userId = JSON.parse(localStorage.getItem("userObject")!).id;
+        const latitude = coordinates.latitude;
+        const longitude = coordinates.longitude;
+        const userData = JSON.parse(localStorage.getItem("userObject")!);
+
+        const { error } = await supabase
+            .from("user_location")
+            .update({
+                user_id: userId,
+                latitude: latitude,
+                longitude: longitude,
+                email: userData.email,
+                updated_at: new Date().toISOString(),
+            })
+            .eq("user_id", userId);
+
+        if (error) {
+            toast.error("Error updating user location. Please try again.");
         }
     };
 
@@ -107,8 +153,14 @@ const Rooms = () => {
             });
 
         if (membershipError) {
-            console.error("Error adding user to room:", membershipError);
-            toast.error("Error adding user to room. Please try again.");
+            if (membershipError.code === "23505") {
+                toast.error("User already added to room.");
+                updateLocation();
+                navigate("/user/dashboard/" + roomCode);
+            } else {
+                console.error("Error adding user to room:", membershipError);
+                toast.error("Error adding user to room. Please try again.");
+            }
         } else {
             console.log("User added to room:", membership);
             toast.success("User added to room successfully!");
@@ -126,7 +178,7 @@ const Rooms = () => {
                 toast.error("Error updating user location. Please try again.");
             }
 
-            navigate("/users/dashboard/" + roomCode);
+            navigate("/user/dashboard/" + roomCode);
         }
 
         setLoading({
@@ -194,6 +246,25 @@ const Rooms = () => {
                     </form>
                 </div>
             </div>
+            {myRooms && myRooms.length > 0 && (
+                <div className={styles.myRoomsContainer}>
+                    <h2 className={styles.authHeader}>My Rooms</h2>
+                    <div className={styles.myRooms}>
+                        {myRooms.map((room: any, index: number) => (
+                            <div key={index} className={styles.myRoom}>
+                                <p>{room.room_code}</p>
+                                <button
+                                    onClick={() => {
+                                        navigate("/admin/dashboard/" + room.room_code);
+                                    }}
+                                >
+                                    Manage
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

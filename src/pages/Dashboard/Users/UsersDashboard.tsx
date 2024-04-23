@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./UsersDashboard.module.css";
 import AppContext from "../../../contexts/appContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getFormattedDate } from "../../utils";
+import { checkAuth, getFormattedDate } from "../../utils";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 
@@ -11,14 +11,38 @@ const UsersDashboard = () => {
     const { supabase } = useContext(AppContext);
     const [userData, setUserData] = useState<any>();
     const [adminData, setAdminData] = useState<any>();
-
-    const [userId, setUserId] = useState("");
+    const navigate = useNavigate();
+    // const [userId, setUserId] = useState("");
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
 
     const [lastUpdated, setLastUpdated] = useState("");
 
     const { room_code } = useParams();
+
+    const updateLocation = async () => {
+        if (!supabase) return;
+        const userEmail = JSON.parse(localStorage.getItem("userObject")!).email;
+        const userId = JSON.parse(localStorage.getItem("userObject")!).id;
+        const { error } = await supabase
+            .from("user_location")
+            .update({
+                user_id: userId,
+                latitude: latitude,
+                longitude: longitude,
+                email: userEmail,
+                updated_at: new Date().toISOString(),
+            })
+            .eq("user_id", userId);
+
+        if (error) {
+            toast.error("Error updating user location. Please try again.");
+        } else {
+            toast.success("Location updated successfully!");
+
+            setLastUpdated(getFormattedDate());
+        }
+    };
 
     const getUser = async () => {
         if (!supabase) return;
@@ -27,7 +51,6 @@ const UsersDashboard = () => {
             toast.error("Error fetching user data");
         } else {
             setUserData(data.user.user_metadata);
-            setUserId(data.user.id);
         }
 
         const { data: roomData, error: roomError } = await supabase
@@ -50,6 +73,7 @@ const UsersDashboard = () => {
         setAdminData(adminData[0].raw_user_meta_data);
     };
     useEffect(() => {
+        checkAuth({ navigate, toast });
         getUser();
 
         const getUserLocation = () => {
@@ -71,28 +95,6 @@ const UsersDashboard = () => {
         getUserLocation();
         updateLocation();
     }, [supabase]);
-
-    const updateLocation = async () => {
-        if (!supabase) return;
-        const { error } = await supabase
-            .from("user_location")
-            .update({
-                user_id: userId,
-                latitude: latitude,
-                longitude: longitude,
-                email: userData.email,
-                updated_at: new Date().toISOString(),
-            })
-            .eq("user_id", userId);
-
-        if (error) {
-            toast.error("Error updating user location. Please try again.");
-        } else {
-            toast.success("Location updated successfully!");
-
-            setLastUpdated(getFormattedDate());
-        }
-    };
 
     return (
         <>

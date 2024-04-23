@@ -1,3 +1,5 @@
+import { NavigateFunction } from "react-router-dom";
+
 export function getFormattedDate() {
     const currentDate = new Date();
     const period = currentDate.getHours() >= 12 ? "P.M." : "A.M.";
@@ -121,3 +123,18 @@ function toRadians(degrees: number): number {
 }
 
 // console.log(`Distance between the two locations: ${distance} ${distance < 1000 ? "meters" : "km"}`);
+
+export const checkAuth = async ({
+    navigate,
+    toast,
+}: {
+    navigate: NavigateFunction;
+    toast: any;
+}) => {
+    const id = localStorage.getItem("userObject");
+
+    if (!id) {
+        toast.error("Please login to continue.");
+        navigate("/");
+    }
+};

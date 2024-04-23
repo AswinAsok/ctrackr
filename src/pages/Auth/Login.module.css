@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #f9f9f9;
     opacity: 1;
     background-image: radial-gradient(#f1f1f1 2px, #f9f9f9 2px);
@@ -17,7 +18,7 @@
     align-items: center;
     flex-wrap: wrap;
     column-gap: 4rem;
-
+    margin-top: 4rem;
     padding: 1rem;
 }
 
@@ -156,7 +157,6 @@
         justify-content: center;
         align-items: center;
         margin-top: 10vh;
-        
     }
 
     .authRightSide {
@@ -191,4 +191,65 @@
     padding: 0 0.5rem;
     color: var(--text-color);
     font-weight: 700;
+}
+
+.myRoomsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+.authHeader {
+    font-family: "DM Sans", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1d1d1d;
+    margin-bottom: 1rem;
+}
+.myRooms {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 40rem;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+}
+.myRoom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 3rem;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+.myRoom:last-child {
+    border-bottom: none;
+}
+.myRoom p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1d1d1d;
+}
+.myRoom button {
+    background-color: #1d1d1d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+}
+@media (max-width: 748px) {
+    .myRooms {
+        width: 90%;
+    }
 }

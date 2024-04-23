@@ -21,11 +21,11 @@ const router = createBrowserRouter([
                 element: <Rooms />,
             },
             {
-                path: "/users/dashboard/:room_code",
+                path: "/user/dashboard/:room_code",
                 element: <UsersDashboard />,
             },
             {
-                path: "/admins/dashboard/:room_code",
+                path: "/admin/dashboard/:room_code",
                 element: <AdminsDashboard />,
             },
         ],

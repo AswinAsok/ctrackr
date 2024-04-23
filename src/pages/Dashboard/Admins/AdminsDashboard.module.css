@@ -27,6 +27,8 @@
     max-width: 21rem;
     width: 100%;
     padding: 1rem;
+
+    overflow-y: auto;
 }
 
 .nearbyHeading {

@@ -46,7 +46,7 @@ const Signup = () => {
                             <input
                                 type="email"
                                 name="email"
-                                placeholder="shambhu@karikku.com"
+                                placeholder="johndoe@gmail.com"
                                 required
                                 className={styles.authInput}
                             />
@@ -66,7 +66,7 @@ const Signup = () => {
                             <input
                                 type="text"
                                 name="fullName"
-                                placeholder="Shambhu K"
+                                placeholder="John Doe"
                                 required
                                 className={styles.authInput}
                             />
@@ -93,12 +93,12 @@ const Signup = () => {
                             />
                         </div>
                         <div className={styles.buttons}>
-                            <Link to="/">
-                                <button className={styles.secondaryAuthButton}>Login</button>
-                            </Link>
                             <button type="submit" className={styles.authButton}>
                                 Sign Up
                             </button>
+                            <Link to="/">
+                                <button className={styles.secondaryAuthButton}>Login</button>
+                            </Link>
                         </div>
                     </form>
                 </div>
