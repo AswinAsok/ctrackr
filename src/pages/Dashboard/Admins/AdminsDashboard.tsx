@@ -200,7 +200,10 @@ const AdminsDashboard = () => {
                             />
                         </div>
                         <div className={styles.nearbyStudentList}>
-                            {users &&
+                            {users && users.length === 0 ? (
+                                <p>No users found.</p>
+                            ) : (
+                                users &&
                                 users
                                     .filter(
                                         (user) =>
@@ -249,7 +252,7 @@ const AdminsDashboard = () => {
                                                         <br />{" "}
                                                         {usersLocation && (
                                                             <ReactTimeAgo
-                                                                date={usersLocation[0].updated_at}
+                                                                date={usersLocation[0]?.updated_at}
                                                                 locale="en-US"
                                                             />
                                                         )}
@@ -296,7 +299,8 @@ const AdminsDashboard = () => {
                                                 </div>
                                             </div>
                                         </>
-                                    ))}
+                                    ))
+                            )}
                         </div>
                     </div>
                 </div>
