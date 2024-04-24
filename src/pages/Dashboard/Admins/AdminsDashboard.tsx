@@ -254,14 +254,17 @@ const AdminsDashboard = () => {
                                                 </div>
                                                 <div className={styles.studentLocationData}>
                                                     <p className={styles.studentLocation}>
-                                                        <span>Last Seen</span>
+                                                        <span>Last Updated</span>
                                                         <br />{" "}
-                                                        {usersLocation && (
-                                                            <ReactTimeAgo
-                                                                date={usersLocation[0]?.updated_at}
-                                                                locale="en-US"
-                                                            />
-                                                        )}
+                                                        {usersLocation &&
+                                                            usersLocation[0]?.updated_at && (
+                                                                <ReactTimeAgo
+                                                                    date={
+                                                                        usersLocation[0]?.updated_at
+                                                                    }
+                                                                    locale="en-US"
+                                                                />
+                                                            )}
                                                     </p>
                                                     <p className={styles.studentLocationValue}>
                                                         {usersLocation &&
@@ -290,14 +293,37 @@ const AdminsDashboard = () => {
                                                                                     longitude:
                                                                                         location.longitude,
                                                                                 }
-                                                                            ).toFixed(2)}{" "}
-                                                                        </p>
-                                                                        <p
-                                                                            className={
-                                                                                styles.userDistanceUnit
-                                                                            }
-                                                                        >
-                                                                            km away
+                                                                            ) < 1000
+                                                                                ? calculateDistance(
+                                                                                      {
+                                                                                          latitude:
+                                                                                              position[0],
+                                                                                          longitude:
+                                                                                              position[1],
+                                                                                      },
+                                                                                      {
+                                                                                          latitude:
+                                                                                              location.latitude,
+                                                                                          longitude:
+                                                                                              location.longitude,
+                                                                                      }
+                                                                                  ).toFixed(2) +
+                                                                                  " meters"
+                                                                                : calculateDistance(
+                                                                                      {
+                                                                                          latitude:
+                                                                                              position[0],
+                                                                                          longitude:
+                                                                                              position[1],
+                                                                                      },
+                                                                                      {
+                                                                                          latitude:
+                                                                                              location.latitude,
+                                                                                          longitude:
+                                                                                              location.longitude,
+                                                                                      }
+                                                                                  ).toFixed(2) +
+                                                                                  " km"}{" "}
                                                                         </p>
                                                                     </>
                                                                 ))}

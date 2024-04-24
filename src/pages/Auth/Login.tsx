@@ -12,6 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const { supabase } = useContext(AppContext);
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const username = (e.target as HTMLFormElement).username.value;
