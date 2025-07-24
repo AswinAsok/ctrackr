@@ -239,14 +239,20 @@ const AdminsDashboard = () => {
                                                         <p className={styles.nearbyStudentName}>
                                                             {user.raw_user_meta_data.full_name}
                                                         </p>
-                                                        <p className={styles.nearbyStudentLocation}>
-                                                            {user.raw_user_meta_data.email.substring(
-                                                                0,
-                                                                user.raw_user_meta_data.email.indexOf(
-                                                                    "@"
-                                                                )
-                                                            )}
-                                                        </p>
+                                                        {user?.raw_user_meta_data.email && (
+                                                            <p
+                                                                className={
+                                                                    styles.nearbyStudentLocation
+                                                                }
+                                                            >
+                                                                {user.raw_user_meta_data.email.substring(
+                                                                    0,
+                                                                    user.raw_user_meta_data.email.indexOf(
+                                                                        "@"
+                                                                    )
+                                                                )}
+                                                            </p>
+                                                        )}
                                                         <p className={styles.nearbyStudentPhone}>
                                                             {user.raw_user_meta_data.phone_number}
                                                         </p>
