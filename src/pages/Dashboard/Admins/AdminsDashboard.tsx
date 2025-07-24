@@ -227,14 +227,16 @@ const AdminsDashboard = () => {
                                         <>
                                             <div className={styles.nearbyStudent}>
                                                 <div className={styles.nearbyStudentData}>
-                                                    <div className={styles.userImageContainer}>
-                                                        <p className={styles.userImage}>
-                                                            {user.raw_user_meta_data.full_name.substring(
-                                                                0,
-                                                                1
-                                                            )}
-                                                        </p>
-                                                    </div>
+                                                    {user?.raw_user_meta_data.full_name && (
+                                                        <div className={styles.userImageContainer}>
+                                                            <p className={styles.userImage}>
+                                                                {user.raw_user_meta_data.full_name.substring(
+                                                                    0,
+                                                                    1
+                                                                )}
+                                                            </p>
+                                                        </div>
+                                                    )}
                                                     <div className={styles.nearbyStudentDetails}>
                                                         <p className={styles.nearbyStudentName}>
                                                             {user.raw_user_meta_data.full_name}
